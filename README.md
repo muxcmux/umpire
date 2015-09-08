@@ -21,7 +21,7 @@ Or install it yourself as:
 ## Usage
 
 Umpire consists of a base policy class that you need to extend and a helper that you can use in your app.
-Because it's doesn't depend on rails, you need to include the Umpire helper in you `ApplicationHelper`
+Because it's doesn't depend on rails, you need to include the Umpire helper in your `ApplicationHelper`
 and your `ApplicationController` or whatever other class you might need to use it in:
 
     include Umpire::AuthHelper
@@ -32,8 +32,7 @@ but if you don't have it - no worries, you can still pas a subject on your own.
 Let's make a simple Policy class and use it in a rails view:
 
 ```ruby
-# policy.rb
-class SchoolPolicy < UmpirePolicy
+class SchoolPolicy < Umpire::Policy
   # the only method you need to overwrite
   # return all the allowed actions here
   # @subject is the subject (current_user) by default
@@ -47,8 +46,9 @@ end
 ```
 
 You can now use the policy class with the helper like this:
-
-    <%= render partial: 'modules/cs_201' if can? :take_cs_201, using: SchoolPolicy %>
+```erb
+<%= render partial: 'modules/cs_201' if can? :take_cs_201, using: SchoolPolicy %>
+```
 
 This will check call `has_taken(:cs_101)` on the result of `current_user`
 
@@ -56,7 +56,7 @@ Other usage examples:
 
 ```ruby
 # with subject
-can? user, :drive, car, using: HighwayCode
+can? User.find(1), :drive, car, using: HighwayCode
 
 # without subject (assumes current_user if available)
 can? :drive, car, using: HighwayCode
