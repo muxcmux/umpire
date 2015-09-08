@@ -32,8 +32,9 @@ module Umpire
       @actions.all? { |a| rules.include?(a) }
     end
   
+    # overwrite me
     def rules
-      return [] if @object.blank?
+      raise NoRulesFound.new("Please implement `rules` in your policy object")
     end
   end
 

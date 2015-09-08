@@ -2,14 +2,14 @@ module Umpire
   module AuthHelper
     # Usage:
     #
-    # without subject (assumes current_user)
-    # can? :drive, car, using: DrivingPolicy
-    #
     # with subject
-    # can? user, :drive, car, using: DrivingPolicy
+    # can? user, :drive, car, using: HighwayCode
+    #
+    # without subject (assumes current_user if available)
+    # can? :drive, car, using: HighwayCode
     #
     # multiple policies
-    # can? :park, car, using: [DrivingPolicy, ParkingPolicy]
+    # can? :park, car, using: [HighwayCode, ParkingRules]
     #
     # without object
     # can? :cook_spaghetti, using: [KitchenPolicy]
@@ -18,13 +18,13 @@ module Umpire
     # can? [:order, :drink], beer, using: BarPolicy
     #
     def can? *args
-      options = args.extract_options!
+      options = args.last.is_a?(Hash) ? args.pop : {}
       policies = *options[:using]
-      raise "Policy class needs to be supplied: { using: SomePolicy }" unless policies.present?
+      raise PolicyMissingError.new if policies.empty?
     
       first_argument = args.shift
       if first_argument.is_a?(Symbol) || first_argument.is_a?(Array)
-        subject = current_user
+        subject = defined?(current_user) ? current_user : {}
         actions = first_argument
       else
         subject = first_argument
@@ -41,9 +41,6 @@ module Umpire
       true
     end
     
-    def current_user
-      current_user || {}
-    end
   
   end
 

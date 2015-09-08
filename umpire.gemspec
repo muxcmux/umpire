@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["storm.bg@gmail.com"]
 
   spec.summary       = %q{Lightweight ruby authorization library based on policies}
-  spec.description   = %q{Plain old policy objects with some handy rails helpers for use in your apps}
+  spec.description   = %q{Plain old ruby objects with a helper for use in your apps}
   spec.homepage      = "https://github.com/muxcmux/umpire"
   spec.license       = "MIT"
 
@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~> 3.3"
 end
