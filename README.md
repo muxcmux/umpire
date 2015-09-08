@@ -1,5 +1,7 @@
 # Umpire
 
+[![Build Status](https://snap-ci.com/muxcmux/umpire/branch/master/build_image)](https://snap-ci.com/muxcmux/umpire/branch/master)
+
 Umpire is a very lightweight authorization lib that uses policy classes to define rules
 
 ## Installation
